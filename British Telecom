@@ -1,22 +1,162 @@
-The map contains islands, named from Island 1 to Island N For any two islands Island / and Island J (I≠J), you can go to Island Jfrom Island / only if the value / divides J. (I is a divisor of J. Given the value for the last island, equal to N, find the number of ways to reach Island N from the first Island, that is, Island 1
-Find the number of ways to reach Island N from Island 1.
+### Problem 1: Number of Ways to Reach Island N
 
-CODE:
+The map contains islands, named from Island 1 to Island N. For any two islands Island i and Island j (i ≠ j), you can go to Island j from Island i only if the value i divides j (i is a divisor of j). Given the value for the last island, equal to N, find the number of ways to reach Island N from the first Island, that is, Island 1.
 
-def count_ways(N):
-    # Create an array to store the number of ways to reach each island
-    ways = [0] * (N + 1)
+#### Solution:
+
+```python
+def countWaysToReachIslandN(N):
+    dp = [0] * (N + 1)  # Create an array to store ways to reach each island
+    dp[1] = 1  # There's only 1 way to start at Island 1
     
-    # Base case
-    ways[1] = 1
-    
-    # Fill the ways array using the described method
     for i in range(1, N + 1):
-        for j in range(i, N + 1, i):
-            ways[j] += ways[i]
+        for j in range(2 * i, N + 1, i):
+            dp[j] += dp[i]  # If i divides j, add ways from i to j
     
-    return ways[N]
+    return dp[N]
 
 # Example usage
-N = 9
-print(count_ways(N))  # Output the number of ways to reach Island 9
+N = 10
+print(countWaysToReachIslandN(N))
+
+
+
+
+
+
+
+### Problem 2: 
+
+Find the minimum cost of traveling between two tram stations in a circular city with N stations numbered from 1 to N. The cost of tickets between adjacent stations is given in an array ticket_cost, where ticket_cost[i] represents the cost of traveling from station i to station (i + 1) % N. Trams can move in both clockwise and anti-clockwise directions.
+
+#### Solution:
+
+```python
+def minimum_cost_travel(N, start, finish, ticket_cost):
+    # Adjusting indices since stations are 1-indexed
+    start_index = start - 1
+    finish_index = finish - 1
+
+    # Calculate clockwise cost
+    if start_index <= finish_index:
+        clockwise_cost = sum(ticket_cost[start_index:finish_index])
+    else:
+        clockwise_cost = sum(ticket_cost[start_index:]) + sum(ticket_cost[:finish_index])
+
+    # Calculate counterclockwise cost
+    if finish_index <= start_index:
+        counterclockwise_cost = sum(ticket_cost[finish_index:start_index])
+    else:
+        counterclockwise_cost = sum(ticket_cost[finish_index:]) + sum(ticket_cost[:start_index])
+
+    # Return the minimum of both costs
+    return min(clockwise_cost, counterclockwise_cost)
+
+# Example usage:
+N = 5
+start = 2
+finish = 4
+ticket_cost = [10, 15, 20, 25, 30]
+print(minimum_cost_travel(N, start, finish, ticket_cost))
+
+
+
+
+
+
+### Problem 3:  Output of following Java Code?
+public class Main {
+    public static void main(String[] args) {
+        Product original = new Product("Laptop", 999.99); // Fixed: 'now' -> '='
+        Product copy = new Product(original); // Fixed: 'now' -> '='
+        
+        copy.name = "Tablet"; // Change the name of the copy
+
+        System.out.println(original.name); // Print the name of the original Product
+    }
+
+    static class Product { // Moved the class definition to be static and accessible
+        String name;
+        double price;
+
+        Product(String n, double p) { // Constructor for original name and price
+            name = n;
+            price = p; // Fixed: 'pi' -> '='
+        }
+
+        Product(Product product) { // Copy constructor
+            this(product.name, product.price); // Initialize using the first constructor
+        }
+    }
+}
+
+
+
+#### Solution:
+
+Laptop
+
+
+
+
+
+
+
+### Problem 4: 
+
+What will be the outcome if nums=[3,4,-1,1]
+def find(nums):
+    n = len(nums)
+
+    if 1 not in nums:
+        return 1
+
+    for i in range(n):
+        if nums[i] <= 0 or nums[i] > n:
+            nums[i] = 1
+
+    for i in range(n):
+        a = abs(nums[i])
+        if a == n:
+            nums[0] = -abs(nums[0])
+        else:
+            nums[a] = -abs(nums[a])
+
+    for i in range(1, n):
+        if nums[i] > 0:
+            return i
+
+    if nums[0] > 0:
+        return n
+
+    return n + 1
+
+#### Solution:
+
+2
+
+
+
+
+
+
+
+
+### Problem 5: 
+
+Based on the following table, what is the output of the SQL query
+STUDENT
+-----------------
+| ID  | NAME  | AGE |
+|-----|-------|-----|
+| 01  | Mike  | 20  |
+| 02  | Alice | 18  |
+| 03  | Mary  | 25  |
+| 04  | Lisa  | NULL|
+-----------------
+SELECT NAME FROM STUDENT WHERE NAME LIKE '%a%' ORDER BY NAME;
+#### Solution:
+
+Alice
+Lisa
+Mary

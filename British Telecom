@@ -1,0 +1,22 @@
+The map contains islands, named from Island 1 to Island N For any two islands Island / and Island J (I≠J), you can go to Island Jfrom Island / only if the value / divides J. (I is a divisor of J. Given the value for the last island, equal to N, find the number of ways to reach Island N from the first Island, that is, Island 1
+Find the number of ways to reach Island N from Island 1.
+
+CODE:
+
+def count_ways(N):
+    # Create an array to store the number of ways to reach each island
+    ways = [0] * (N + 1)
+    
+    # Base case
+    ways[1] = 1
+    
+    # Fill the ways array using the described method
+    for i in range(1, N + 1):
+        for j in range(i, N + 1, i):
+            ways[j] += ways[i]
+    
+    return ways[N]
+
+# Example usage
+N = 9
+print(count_ways(N))  # Output the number of ways to reach Island 9
